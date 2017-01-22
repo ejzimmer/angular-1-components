@@ -1,0 +1,67 @@
+body {
+    background-color: lightgreen;
+}
+
+button {
+    margin: 100px 20px;
+    background-color: transparent;
+    border: 0;
+}
+
+button:hover {
+    background-color: orange;
+}
+
+button img {
+    width: 100px;
+}
+
+div.meter {
+    display: flex;
+    align-self: stretch;
+    flex-grow: 1;
+}
+
+span.item {
+    background-color: grey;
+    border-right: solid 1px darkgrey;
+    flex-grow: 1;
+}
+
+span.item-complete {
+    background: linear-gradient(orange, orangered);
+}
+
+span.item:first-child {
+    border-bottom-left-radius: 5px;
+    border-top-left-radius: 5px;
+}
+
+span.item:last-child {
+    border-bottom-right-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+tracker-meter {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.scoreboard-stuff {
+    display: flex;
+}
+
+.days {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    height: 275px;
+}
+
+.days span {
+    font-family: "Helvetica Neue";
+    font-size: 3em;
+    padding-right: 1.5em;
+}

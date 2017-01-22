@@ -1,0 +1,56 @@
+<!doctype html>
+<html>
+<head>
+  <style>
+    body {
+      font-size: 48px;
+      font-family: 'Helvetica', sansserif;
+    }
+
+    button {
+      background-color: blue;
+      color: white;
+      font-size: 48px;
+      border: solid 1px red;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+  <div ng-app="one-way-binding">
+    <parent-component></parent-component>
+  </div>
+
+<script src="node_modules/angular/angular.js"></script>
+<script>
+  const parentComponent = {
+    template: `<div>ParentController.mood = {{$ctrl.mood}}</div>
+                <div><button ng-click="$ctrl.changeMood()">Change parent mood</button></div>
+              <child-component child-mood="$ctrl.mood"></child-component>`,
+    controller: function() {
+      const catFace = String.fromCodePoint(0x1F63C);
+      const rainbow = String.fromCodePoint(0x1F308);
+      this.mood = catFace;
+      this.changeMood = () => { this.mood = (this.mood === catFace ? rainbow : catFace) }
+    }
+  };
+
+  const childComponent = {
+    template: `<span style="font-family: 'Courier New'">&lt;child-component child-mood="$ctrl.mood"&gt;&lt;/child-component&gt;</span>
+              <div>ChildController.childMood = {{$ctrl.childMood}}</div>
+              <div><button ng-click="$ctrl.changeMood()">Change child mood</button>`,
+    bindings: {
+      childMood: '<'
+    },
+    controller: function() {
+      const catFace = String.fromCodePoint(0x1F63C);
+      const rainbow = String.fromCodePoint(0x1F308);
+      this.changeMood = () => { this.childMood = (this.childMood === catFace ? rainbow : catFace) }
+    }
+  };
+  angular.module('one-way-binding', [])
+      .component('parentComponent', parentComponent)
+      .component('childComponent', childComponent);
+</script>
+</body>
+</html>
