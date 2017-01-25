@@ -1,3 +1,26 @@
+class MeterController {
+  constructor($scope) {
+    $scope.$watch(() => this.current, () => {
+      this.update.apply(this);
+    });
+  }
+
+  $onInit() {
+    this.total = new Array(this.goal);
+    this.update();
+  }
+
+  update() {
+    for (let i = 0; i < this.current && i < this.goal; i++) {
+      this.total[i] = true;
+    }
+    for (let i = this.current; i < this.goal; i++) {
+      this.total[i] = false;
+    }
+  }
+}
+MeterController.$inject = ['$scope'];
+
 angular.module('health-tracker', [])
     .directive('healthScoreboard', () => {
       return {
@@ -76,25 +99,3 @@ angular.module('health-tracker', [])
       }
     });
 
-class MeterController {
-  constructor($scope) {
-    $scope.$watch(() => this.current, () => {
-      this.update.apply(this);
-    });
-  }
-
-  $onInit() {
-    this.total = new Array(this.goal);
-    this.update();
-  }
-
-  update() {
-    for (let i = 0; i < this.current && i < this.goal; i++) {
-      this.total[i] = true;
-    }
-    for (let i = this.current; i < this.goal; i++) {
-      this.total[i] = false;
-    }
-  }
-}
-MeterController.$inject = ['$scope'];
