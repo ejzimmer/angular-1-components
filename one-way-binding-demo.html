@@ -13,6 +13,11 @@
       font-size: 48px;
       border: solid 1px red;
       border-radius: 5px;
+      margin-bottom: 50px;
+    }
+
+    div {
+      margin-bottom: 10px;
     }
   </style>
 </head>
@@ -23,29 +28,58 @@
 
 <script src="node_modules/angular/angular.js"></script>
 <script>
+  const falcon = {
+    name: 'Millenium Falcon',
+    pilot: 'Han Solo'
+  };
+  const xWing = {
+    name: 'X-Wing',
+    pilot: 'Luke Skywalker'
+  };
+  const changeShip = function (ship) {
+    return ship === falcon ? xWing : falcon;
+  };
+  const changePilot = function (ship) {
+    if (ship === falcon) {
+      return ship.pilot === 'Han Solo' ? 'Rei' : 'Han Solo';
+    } else {
+      return ship.pilot === 'Luke Skywalker' ? 'Dameron Poe' : 'Luke Skywalker';
+    }
+  };
+
   const parentComponent = {
-    template: `<div>ParentController.mood = {{$ctrl.mood}}</div>
-                <div><button ng-click="$ctrl.changeMood()">Change parent mood</button></div>
-              <child-component child-mood="$ctrl.mood"></child-component>`,
-    controller: function() {
-      const catFace = String.fromCodePoint(0x1F63C);
-      const rainbow = String.fromCodePoint(0x1F308);
-      this.mood = catFace;
-      this.changeMood = () => { this.mood = (this.mood === catFace ? rainbow : catFace) }
+    template: `<div>ParentController</div>
+                <div>Ship: {{$ctrl.ship.name}}<br> Pilot: {{$ctrl.ship.pilot}}</div>
+                <div><button ng-click="$ctrl.changeShip()">Change whole object</button>
+                <button ng-click="$ctrl.changePilot()">Just change property</button></div>
+              <child-component child-ship="$ctrl.ship"></child-component>`,
+    controller: function () {
+      this.ship = falcon;
+      this.changeShip = function () {
+        this.ship = changeShip(this.ship);
+      };
+      this.changePilot = function () {
+        this.ship.pilot = changePilot(this.ship);
+      }
     }
   };
 
   const childComponent = {
-    template: `<span style="font-family: 'Courier New'">&lt;child-component child-mood="$ctrl.mood"&gt;&lt;/child-component&gt;</span>
-              <div>ChildController.childMood = {{$ctrl.childMood}}</div>
-              <div><button ng-click="$ctrl.changeMood()">Change child mood</button>`,
+    template: `<span style="font-family: 'Courier New'">&lt;child-component child-ship="$ctrl.ship"&gt;&lt;/child-component&gt;</span>
+              <div>ChildController</div>
+              <div>Ship: {{$ctrl.childShip.name}}<br> Pilot: {{$ctrl.childShip.pilot}}</div>
+              <div><button ng-click="$ctrl.changeShip()">Change whole object</button>
+              <button ng-click="$ctrl.changePilot()">Just change property</button></div>`,
     bindings: {
-      childMood: '<'
+      childShip: '='
     },
-    controller: function() {
-      const catFace = String.fromCodePoint(0x1F63C);
-      const rainbow = String.fromCodePoint(0x1F308);
-      this.changeMood = () => { this.childMood = (this.childMood === catFace ? rainbow : catFace) }
+    controller: function () {
+      this.changeShip = function () {
+        this.childShip = changeShip(this.childShip);
+      };
+      this.changePilot = function () {
+        this.childShip.pilot = changePilot(this.childShip);
+      };
     }
   };
   angular.module('one-way-binding', [])
