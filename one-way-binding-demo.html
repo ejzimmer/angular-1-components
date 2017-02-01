@@ -34,16 +34,16 @@
   };
   const xWing = {
     name: 'X-Wing',
-    pilot: 'Luke Skywalker'
+    pilot: 'BB-8'
   };
   const changeShip = function (ship) {
     return ship === falcon ? xWing : falcon;
   };
   const changePilot = function (ship) {
     if (ship === falcon) {
-      return ship.pilot === 'Han Solo' ? 'Rei' : 'Han Solo';
+      return ship.pilot === 'Han Solo' ? 'Rey' : 'Han Solo';
     } else {
-      return ship.pilot === 'Luke Skywalker' ? 'Dameron Poe' : 'Luke Skywalker';
+      return ship.pilot === 'BB-8' ? 'Dameron Poe' : 'BB-8';
     }
   };
 

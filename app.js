@@ -1,8 +1,6 @@
 class MeterController {
   constructor($scope) {
-    $scope.$watch(() => this.current, () => {
-      this.update.apply(this);
-    });
+    $scope.$watch(() => this.current, this.update.bind(this));
   }
 
   $onInit() {
